@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="http-api" />
+        <module name="http2client" />
+        <module name="http2server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="examples" target="1.8" />
+      <module name="http-api" target="1.8" />
+      <module name="http2client" target="1.8" />
+      <module name="http2server" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,5 @@
+com/http/examples/BenchmarkMain.class
+com/http/examples/BenchmarkMain$Action.class
+com/http/examples/BenchmarkMain$HttpInterceptor.class
+com/http/examples/BenchmarkMain$HttpCallback.class
+com/http/examples/BenchmarkMain$ActionOperator.class
