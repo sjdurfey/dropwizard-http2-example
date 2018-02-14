@@ -1,5 +1,13 @@
-com/http/examples/BenchmarkMain.class
-com/http/examples/BenchmarkMain$Action.class
+com/http/examples/AbstractBenchmark$HttpInterceptor.class
+com/http/examples/AbstractBenchmark.class
+com/http/examples/AbstractBenchmark$Action.class
 com/http/examples/BenchmarkMain$HttpInterceptor.class
-com/http/examples/BenchmarkMain$HttpCallback.class
 com/http/examples/BenchmarkMain$ActionOperator.class
+com/http/examples/StreamMessageBenchmark.class
+com/http/examples/BenchmarkMain$Action.class
+com/http/examples/PayloadMessageBenchmark.class
+com/http/examples/AbstractBenchmark$ActionOperator.class
+com/http/examples/SingleMessageBenchmark.class
+com/http/examples/AbstractBenchmark$HttpCallback.class
+com/http/examples/BenchmarkMain.class
+com/http/examples/BenchmarkMain$HttpCallback.class

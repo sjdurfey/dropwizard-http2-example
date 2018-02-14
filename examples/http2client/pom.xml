@@ -12,7 +12,7 @@
     <artifactId>http2-client</artifactId>
 
     <properties>
-        <mainClass>com.http.examples.BenchmarkMain</mainClass>
+        <mainClass>com.http.examples.AbstractBenchmark</mainClass>
     </properties>
 
     <dependencies>

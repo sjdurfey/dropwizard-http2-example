@@ -109,7 +109,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <mainClass>com.http.examples.BenchmarkMain</mainClass>
+    <mainClass>com.http.examples.AbstractBenchmark</mainClass>
   </properties>
 </project>
 
