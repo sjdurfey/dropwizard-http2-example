@@ -23,6 +23,7 @@ import java.util.stream.IntStream;
 
 import static org.eclipse.jetty.util.ssl.SslContextFactory.TRUST_ALL_CERTS;
 
+@Ignore
 public class Http2ClientTest {
 
   @Rule public TestName name = new TestName();

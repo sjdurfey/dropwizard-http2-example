@@ -3,6 +3,8 @@ logging:
   loggers:
     com.http2.examples: DEBUG
 server:
+  gzip:
+    bufferSize: 8KiB
   applicationConnectors:
     - type: h2
       port: 8445

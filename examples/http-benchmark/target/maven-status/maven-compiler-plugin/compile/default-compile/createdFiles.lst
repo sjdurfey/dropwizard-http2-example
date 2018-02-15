@@ -5,9 +5,13 @@ com/http/benchmark/StreamMessageBenchmark.class
 com/http/benchmark/BenchmarkMain.class
 com/http/benchmark/AbstractBenchmark.class
 com/http/benchmark/BenchmarkMain$HttpInterceptor.class
+com/http/benchmark/AbstractBenchmark$GzipRequestInterceptor$1.class
+com/http/benchmark/AbstractBenchmark$GzipRequestInterceptor$2.class
 com/http/benchmark/AbstractBenchmark$ActionOperator.class
 com/http/benchmark/BenchmarkMain$HttpCallback.class
+com/http/benchmark/AbstractBenchmark$1.class
 com/http/benchmark/PayloadMessageBenchmark.class
 com/http/benchmark/AbstractBenchmark$HttpCallback.class
+com/http/benchmark/AbstractBenchmark$GzipRequestInterceptor.class
 com/http/benchmark/AbstractBenchmark$Action.class
 com/http/benchmark/BenchmarkMain$Action.class

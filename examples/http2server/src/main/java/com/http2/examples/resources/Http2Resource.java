@@ -23,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 /** @author Stephen Durfey */
 @Path("/http2")
@@ -58,6 +59,9 @@ public class Http2Resource {
   @Path("multipart")
   @Consumes(MultiPartMediaTypes.MULTIPART_MIXED)
   public long postMultipart(@Context HttpHeaders headers, MultiPart multiPart) throws IOException {
+    List<String> requestHeader = headers.getRequestHeader("Content-Encoding");
+//    requestHeader.forEach(System.out::println);
+    
     int sum = 0;
     for (final BodyPart bodyPart : multiPart.getBodyParts()) {
       // converts the data from the underlying input stream into the

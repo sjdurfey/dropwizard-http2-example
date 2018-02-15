@@ -9,6 +9,7 @@ import io.airlift.airline.Help;
 import io.airlift.airline.Option;
 import io.airlift.airline.OptionType;
 import okhttp3.*;
+import okio.Buffer;
 import okio.BufferedSink;
 import okio.GzipSink;
 import okio.Okio;
@@ -56,23 +57,23 @@ public abstract class AbstractBenchmark implements Runnable {
   @Option(
     type = OptionType.COMMAND,
     name = {"-r", "--repetitions"},
-    description = "tells command how many times to repeat the benchmark"
+    description = "tells command how many times to repeat the benchmark; defaults to 1"
   )
-  public int repetitions;
+  public int repetitions = 1;
 
   @Option(
     type = OptionType.COMMAND,
     name = {"-t", "--threads"},
-    description = "number of threads to execute in parallel"
+    description = "number of threads to execute in parallel; defaults to 1"
   )
-  public int threads;
+  public int threads = 1;
 
   @Option(
     type = OptionType.COMMAND,
     name = {"-v", "--size"},
-    description = "size of each entity during the upload"
+    description = "size of each entity during the upload in bytes; defaults to 1500"
   )
-  public int payloadSize;
+  public int payloadSize = 1500;
 
   @Option(
     type = OptionType.COMMAND,
@@ -98,7 +99,7 @@ public abstract class AbstractBenchmark implements Runnable {
 
   @Option(
     type = OptionType.COMMAND,
-    name = {"-v", "--verbose"},
+    name = {"-l", "--verbose"},
     description = "verbose logging; logs out much more info about the run"
   )
   public boolean verbose = false;
@@ -194,7 +195,6 @@ public abstract class AbstractBenchmark implements Runnable {
 
       // if numEntities was set at the command line, override the default values
       if (numEntities > 0) entityCounts = Arrays.asList(numEntities);
-      int messageSize = payloadSize > 0 ? payloadSize : 1500;
 
       List<Future> futures = new ArrayList<>();
       IntStream.range(0, repetitions)
@@ -207,11 +207,11 @@ public abstract class AbstractBenchmark implements Runnable {
                             if (!http2) {
                               futures.add(
                                   threadPool.submit(
-                                      getAction(HTTP1, url, numEntities, messageSize)));
+                                      getAction(HTTP1, url, numEntities, payloadSize)));
                             } else {
                               futures.add(
                                   threadPool.submit(
-                                      getAction(HTTP2, url, numEntities, messageSize)));
+                                      getAction(HTTP2, url, numEntities, payloadSize)));
                             }
                           }));
 
@@ -316,11 +316,13 @@ public abstract class AbstractBenchmark implements Runnable {
             .newBuilder()
             .protocols(protocols)
             .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
-            .addNetworkInterceptor(new HttpInterceptor(registry.timer(metricName)))
             .hostnameVerifier((hostname, session) -> true);
 
     if (gzip)
       builder.addNetworkInterceptor(new GzipRequestInterceptor());
+
+    // add this timer second, so it doesn't capture the compression time from gzip
+    builder.addNetworkInterceptor(new HttpInterceptor(registry.timer(metricName)));
     
     if (enableSSL(url)) {
       if (verbose) System.out.println("Using TLS for connection; Trusting all certificates");
@@ -378,9 +380,31 @@ public abstract class AbstractBenchmark implements Runnable {
           originalRequest
               .newBuilder()
               .header("Content-Encoding", "gzip")
-              .method(originalRequest.method(), gzip(originalRequest.body()))
+              .method(originalRequest.method(), forceContentLength(gzip(originalRequest.body())))
               .build();
       return chain.proceed(compressedRequest);
+    }
+
+    /** https://github.com/square/okhttp/issues/350 */
+    private RequestBody forceContentLength(final RequestBody requestBody) throws IOException {
+      final Buffer buffer = new Buffer();
+      requestBody.writeTo(buffer);
+      return new RequestBody() {
+        @Override
+        public MediaType contentType() {
+          return requestBody.contentType();
+        }
+
+        @Override
+        public long contentLength() {
+          return buffer.size();
+        }
+
+        @Override
+        public void writeTo(BufferedSink sink) throws IOException {
+          sink.write(buffer.snapshot());
+        }
+      };
     }
 
     private RequestBody gzip(final RequestBody body) {
