@@ -3,6 +3,7 @@ package com.http.examples;
 import com.codahale.metrics.Timer;
 import io.airlift.airline.Command;
 import okhttp3.*;
+import org.eclipse.jetty.http.HttpHeader;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -62,12 +63,15 @@ public class SingleMessageBenchmark extends AbstractBenchmark {
     try {
       final CountDownLatch latch = new CountDownLatch(bodies.size());
       for (final RequestBody body : bodies) {
-        Request request = new Request.Builder().url(url).post(body).build();
+        Request.Builder request = new Request.Builder().url(url).post(body);
+
+        if (BEARER_TOKEN != null)
+          request.addHeader(HttpHeader.AUTHORIZATION.name(), BEARER_TOKEN);
 
         // https://github.com/square/okhttp/issues/3442
         if (cntr == 0) {
           client.dispatcher().setMaxRequestsPerHost(1);
-          Response execute = client.newCall(request).execute();
+          Response execute = client.newCall(request.build()).execute();
           execute.close();
           latch.countDown();
           cntr++;
@@ -80,7 +84,7 @@ public class SingleMessageBenchmark extends AbstractBenchmark {
             client.dispatcher().setMaxRequestsPerHost(50);
 
           HttpCallback httpCallback = new HttpCallback(latch);
-          client.newCall(request).enqueue(httpCallback);
+          client.newCall(request.build()).enqueue(httpCallback);
           cntr++;
         }
       }

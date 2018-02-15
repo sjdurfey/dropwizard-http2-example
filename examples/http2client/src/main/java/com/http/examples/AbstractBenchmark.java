@@ -14,8 +14,7 @@ import org.apache.commons.text.RandomStringGenerator;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -76,6 +75,15 @@ public abstract class AbstractBenchmark implements Runnable {
         "number of entities to upload; default uploads in the following increments: 1, 10, 100, 1000, 5000"
   )
   public int numEntities;
+
+  @Option(
+    type = OptionType.COMMAND,
+    name = {"-b", "--bearer"},
+    description = "the bearer token set in the Authorization header"
+  )
+  public String BEARER_TOKEN_LOCATION;
+
+  protected String BEARER_TOKEN;
 
   Random random = new Random();
   RandomStringGenerator generator =
@@ -151,30 +159,33 @@ public abstract class AbstractBenchmark implements Runnable {
   }
 
   public void run() {
-    ExecutorService threadPool = Executors.newFixedThreadPool(threads);
-
-    // if numEntities was set at the command line, override the default values
-    if (numEntities > 0) entityCounts = Arrays.asList(numEntities);
-    int messageSize = payloadSize > 0 ? payloadSize : 1500;
-
-    List<Future> futures = new ArrayList<>();
-    IntStream.range(0, repetitions)
-        .forEach(
-            i ->
-                entityCounts
-                    .stream()
-                    .forEach(
-                        entities -> {
-                          if (!http2) {
-                            futures.add(
-                                threadPool.submit(getAction(HTTP1, url, numEntities, messageSize)));
-                          } else {
-                            futures.add(
-                                threadPool.submit(getAction(HTTP2, url, numEntities, messageSize)));
-                          }
-                        }));
-
     try {
+      setBearerToken();
+      ExecutorService threadPool = Executors.newFixedThreadPool(threads);
+
+      // if numEntities was set at the command line, override the default values
+      if (numEntities > 0) entityCounts = Arrays.asList(numEntities);
+      int messageSize = payloadSize > 0 ? payloadSize : 1500;
+
+      List<Future> futures = new ArrayList<>();
+      IntStream.range(0, repetitions)
+          .forEach(
+              i ->
+                  entityCounts
+                      .stream()
+                      .forEach(
+                          entities -> {
+                            if (!http2) {
+                              futures.add(
+                                  threadPool.submit(
+                                      getAction(HTTP1, url, numEntities, messageSize)));
+                            } else {
+                              futures.add(
+                                  threadPool.submit(
+                                      getAction(HTTP2, url, numEntities, messageSize)));
+                            }
+                          }));
+
       System.out.println("number of futures: " + futures.size());
       // wait for all futures to finish before moving out to print the results
       for (final Future future : futures) {
@@ -226,6 +237,15 @@ public abstract class AbstractBenchmark implements Runnable {
         .append(",")
         .append(convertToMillis(snapshot.get99thPercentile()))
         .toString();
+  }
+
+  private void setBearerToken() throws IOException {
+    if (BEARER_TOKEN_LOCATION != null) {
+      try (BufferedReader reader = new BufferedReader(new FileReader(BEARER_TOKEN_LOCATION))) {
+        BEARER_TOKEN = reader.readLine();
+
+      }
+    }
   }
 
   protected OkHttpClient getHttpClient(List<Protocol> protocols, String url, String metricName)
