@@ -59,13 +59,11 @@ public class StreamMessageBenchmark extends AbstractBenchmark {
     try {
       Request.Builder request = new Request.Builder().url(url).post(multipartBody);
 
-//      if (BEARER_TOKEN != null) request.addHeader(HttpHeader.AUTHORIZATION.toString(), "Bearer " +  BEARER_TOKEN);
-
       // https://github.com/square/okhttp/issues/3442
       client.dispatcher().setMaxRequestsPerHost(1);
       Response execute = client.newCall(request.build()).execute();
 
-      if (!execute.isSuccessful()) {
+      if (!execute.isSuccessful() || verbose) {
         System.out.println("Received status code: [" + execute.code() + "] with message [" + execute.body().string());
       }
       

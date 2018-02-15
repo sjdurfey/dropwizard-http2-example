@@ -9,12 +9,18 @@ import io.airlift.airline.Help;
 import io.airlift.airline.Option;
 import io.airlift.airline.OptionType;
 import okhttp3.*;
+import okio.BufferedSink;
+import okio.GzipSink;
+import okio.Okio;
 import org.apache.commons.text.RandomStringGenerator;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -35,7 +41,7 @@ public abstract class AbstractBenchmark implements Runnable {
 
   @Option(
     type = OptionType.COMMAND,
-    name = {"-h2", "http2"},
+    name = {"-h2", "--http2"},
     description = "indicates to use http2"
   )
   public boolean http2;
@@ -82,6 +88,27 @@ public abstract class AbstractBenchmark implements Runnable {
     description = "the bearer token set in the Authorization header"
   )
   public String BEARER_TOKEN_LOCATION;
+
+  @Option(
+    type = OptionType.COMMAND,
+    name = {"-rt", "--read-timeout"},
+    description = "sets the client read timeout, in milliseconds; defaults to 60000 ms"
+  )
+  public long readTimeout = 60000;
+
+  @Option(
+    type = OptionType.COMMAND,
+    name = {"-v", "--verbose"},
+    description = "verbose logging; logs out much more info about the run"
+  )
+  public boolean verbose = false;
+
+  @Option(
+    type = OptionType.COMMAND,
+    name = {"-z", "--gzip"},
+    description = "uses gzip compression on the request before sending to service; defaults to false"
+  )
+  public boolean gzip = false;
 
   protected String BEARER_TOKEN;
 
@@ -162,6 +189,7 @@ public abstract class AbstractBenchmark implements Runnable {
   public void run() {
     try {
       setBearerToken();
+
       ExecutorService threadPool = Executors.newFixedThreadPool(threads);
 
       // if numEntities was set at the command line, override the default values
@@ -187,13 +215,16 @@ public abstract class AbstractBenchmark implements Runnable {
                             }
                           }));
 
-      System.out.println("number of futures: " + futures.size());
+      System.out.println("Executing [" + futures.size() + "] actions");
       // wait for all futures to finish before moving out to print the results
+      int i = 1;
       for (final Future future : futures) {
-        System.out.println("waiting for future to finish");
+        if (verbose)
+          System.out.println("waiting for future [" + i + "/" + futures.size() + "] to finish");
         future.get();
       }
-      System.out.println("futures have finished");
+      if (verbose) System.out.println("All actions have finished");
+
       printResults(entityCounts);
       threadPool.shutdown();
     } catch (ExecutionException | InterruptedException | IOException e) {
@@ -203,7 +234,9 @@ public abstract class AbstractBenchmark implements Runnable {
 
   private void printResults(List<Integer> entityCounts) throws IOException {
     // create CSV writer
+    System.out.println("Writing metrics to file [" + resultsOutputDir + "]");
     try (CSVWriter writer = new CSVWriter(new FileWriter(resultsOutputDir))) {
+      writer.writeNext(getHeader().split(","));
       entityCounts
           .stream()
           .forEach(
@@ -215,6 +248,28 @@ public abstract class AbstractBenchmark implements Runnable {
                         e -> writer.writeNext(getTimerLine(e.getKey(), e.getValue()).split(",")));
               });
     }
+  }
+
+  private String getHeader() {
+    return new StringBuilder()
+        .append("Metric Name")
+        .append(",")
+        .append("Timer Count")
+        .append(",")
+        .append("Median")
+        .append(",")
+        .append("Mean")
+        .append(",")
+        .append("Min")
+        .append(",")
+        .append("Max")
+        .append(",")
+        .append("75th Percentile")
+        .append(",")
+        .append("95th Percentile")
+        .append(",")
+        .append("99th Percentile")
+        .toString();
   }
 
   private String getTimerLine(String metricName, Timer timer) {
@@ -245,6 +300,10 @@ public abstract class AbstractBenchmark implements Runnable {
       try (BufferedReader reader = new BufferedReader(new FileReader(BEARER_TOKEN_LOCATION))) {
         BEARER_TOKEN = reader.readLine();
       }
+
+      if (verbose) System.out.println("Using Bearer token: " + BEARER_TOKEN);
+    } else {
+      if (verbose) System.out.println("Not using a Bearer token");
     }
   }
 
@@ -256,10 +315,15 @@ public abstract class AbstractBenchmark implements Runnable {
         new OkHttpClient()
             .newBuilder()
             .protocols(protocols)
+            .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
             .addNetworkInterceptor(new HttpInterceptor(registry.timer(metricName)))
             .hostnameVerifier((hostname, session) -> true);
 
+    if (gzip)
+      builder.addNetworkInterceptor(new GzipRequestInterceptor());
+    
     if (enableSSL(url)) {
+      if (verbose) System.out.println("Using TLS for connection; Trusting all certificates");
       final SSLContext sslContext = SSLContext.getInstance("SSL");
       sslContext.init(null, TRUST_ALL_CERTS, new java.security.SecureRandom());
       // Create an ssl socket factory with our all-trusting manager
@@ -285,14 +349,59 @@ public abstract class AbstractBenchmark implements Runnable {
 
     @Override
     public Response intercept(Interceptor.Chain chain) throws IOException {
-      Request request =
-          chain.request().newBuilder().header("Authorization", "Bearer " + BEARER_TOKEN).build();
+      Request request;
+      if (BEARER_TOKEN != null) {
+        if (verbose) System.out.println("Adding bearer token to http header");
+        request =
+            chain.request().newBuilder().header("Authorization", "Bearer " + BEARER_TOKEN).build();
+      } else request = chain.request();
+
       Timer.Context time = timer.time();
       try {
         return chain.proceed(request);
       } finally {
         time.stop();
       }
+    }
+  }
+
+  private class GzipRequestInterceptor implements Interceptor {
+
+    @Override
+    public Response intercept(Interceptor.Chain chain) throws IOException {
+      Request originalRequest = chain.request();
+      if (originalRequest.body() == null || originalRequest.header("Content-Encoding") != null) {
+        return chain.proceed(originalRequest);
+      }
+
+      Request compressedRequest =
+          originalRequest
+              .newBuilder()
+              .header("Content-Encoding", "gzip")
+              .method(originalRequest.method(), gzip(originalRequest.body()))
+              .build();
+      return chain.proceed(compressedRequest);
+    }
+
+    private RequestBody gzip(final RequestBody body) {
+      return new RequestBody() {
+        @Override
+        public MediaType contentType() {
+          return body.contentType();
+        }
+
+        @Override
+        public long contentLength() {
+          return -1; // We don't know the compressed length in advance!
+        }
+
+        @Override
+        public void writeTo(BufferedSink sink) throws IOException {
+          BufferedSink gzipSink = Okio.buffer(new GzipSink(sink));
+          body.writeTo(gzipSink);
+          gzipSink.close();
+        }
+      };
     }
   }
 

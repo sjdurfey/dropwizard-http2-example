@@ -1,6 +1,7 @@
 package com.http2.examples;
 
 import okhttp3.*;
+import org.apache.commons.text.RandomStringGenerator;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -15,13 +16,13 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.eclipse.jetty.util.ssl.SslContextFactory.TRUST_ALL_CERTS;
 
-@Ignore
 public class Http2ClientTest {
 
   @Rule public TestName name = new TestName();
@@ -34,6 +35,20 @@ public class Http2ClientTest {
   @BeforeClass
   public static void start() {
     sum = IntStream.range(streamStart, streamStop).sum();
+  }
+
+  @Test
+  public void test() {
+    long start = System.currentTimeMillis();
+      Random random = new Random();
+      RandomStringGenerator generator =
+              new RandomStringGenerator.Builder()
+                      .withinRange('a', 'z')
+                      .usingRandom(random::nextInt)
+                      .build();
+      String generate = generator.generate(50000000);
+    System.out.println("Length: " + generate.length());
+      System.out.println(System.currentTimeMillis() - start);
   }
 
   @Test
