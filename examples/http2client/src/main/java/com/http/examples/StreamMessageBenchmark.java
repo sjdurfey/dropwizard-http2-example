@@ -3,6 +3,7 @@ package com.http.examples;
 import com.codahale.metrics.Timer;
 import io.airlift.airline.Command;
 import okhttp3.*;
+import org.eclipse.jetty.http.HttpHeader;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -13,7 +14,10 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 /** @author Stephen Durfey */
-@Command(name = "stream", description = "Streams a number of entities to a rest end point as MIME multipart/mixed")
+@Command(
+  name = "stream",
+  description = "Streams a number of entities to a rest end point as MIME multipart/mixed"
+)
 public class StreamMessageBenchmark extends AbstractBenchmark {
 
   private static final String ROOT_METRIC_NAME = "http_stream_message";
@@ -54,11 +58,13 @@ public class StreamMessageBenchmark extends AbstractBenchmark {
     Timer.Context timer = registry.timer(metricName + FULL_RESULT).time();
     long start = System.currentTimeMillis();
     try {
-      Request request = new Request.Builder().url(url).post(multipartBody).build();
+      Request.Builder request = new Request.Builder().url(url).post(multipartBody);
+
+      if (BEARER_TOKEN != null) request.addHeader(HttpHeader.AUTHORIZATION.name(), BEARER_TOKEN);
 
       // https://github.com/square/okhttp/issues/3442
       client.dispatcher().setMaxRequestsPerHost(1);
-      Response execute = client.newCall(request).execute();
+      Response execute = client.newCall(request.build()).execute();
       execute.close();
     } finally {
       timer.stop();
