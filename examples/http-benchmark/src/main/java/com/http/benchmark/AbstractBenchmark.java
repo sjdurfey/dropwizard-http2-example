@@ -243,7 +243,9 @@ public abstract class AbstractBenchmark implements Runnable {
   private void setBearerToken() throws IOException {
     if (BEARER_TOKEN_LOCATION != null) {
       try (BufferedReader reader = new BufferedReader(new FileReader(BEARER_TOKEN_LOCATION))) {
-        BEARER_TOKEN = reader.readLine();
+        String line;
+        while ((line = reader.readLine()) != null)
+          BEARER_TOKEN += line;
       }
     }
   }
