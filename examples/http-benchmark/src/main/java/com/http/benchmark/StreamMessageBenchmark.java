@@ -65,6 +65,11 @@ public class StreamMessageBenchmark extends AbstractBenchmark {
       // https://github.com/square/okhttp/issues/3442
       client.dispatcher().setMaxRequestsPerHost(1);
       Response execute = client.newCall(request.build()).execute();
+
+      if (!execute.isSuccessful()) {
+        System.out.println("Received status code: [" + execute.code() + "] with message [" + execute.body().string());
+      }
+      
       execute.close();
     } finally {
       timer.stop();
