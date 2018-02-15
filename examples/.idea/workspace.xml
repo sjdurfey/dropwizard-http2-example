@@ -20,8 +20,8 @@
       <file leaf-file-name="AbstractBenchmark.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/AbstractBenchmark.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="247" column="30" lean-forward="false" selection-start-line="247" selection-start-column="30" selection-end-line="247" selection-end-column="30" />
+            <state relative-caret-position="358">
+              <caret line="288" column="96" lean-forward="false" selection-start-line="288" selection-start-column="96" selection-end-line="288" selection-end-column="96" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -32,8 +32,8 @@
       <file leaf-file-name="SingleMessageBenchmark.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/SingleMessageBenchmark.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="67" column="33" lean-forward="false" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+            <state relative-caret-position="424">
+              <caret line="67" column="35" lean-forward="true" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -44,36 +44,9 @@
       <file leaf-file-name="HttpHeader.java" pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-http/9.4.7.v20170914/jetty-http-9.4.7.v20170914-sources.jar!/org/eclipse/jetty/http/HttpHeader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
+            <state relative-caret-position="343">
               <caret line="65" column="4" lean-forward="false" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#5953#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#5146#5147#0" expanded="false" />
-                <element signature="e#5195#5196#0" expanded="false" />
-                <element signature="e#5302#5303#0" expanded="false" />
-                <element signature="e#5331#5332#0" expanded="false" />
-                <element signature="e#5448#5449#0" expanded="false" />
-                <element signature="e#5487#5488#0" expanded="false" />
-                <element signature="e#5597#5598#0" expanded="false" />
-                <element signature="e#5651#5652#0" expanded="false" />
-                <element signature="e#5758#5759#0" expanded="false" />
-                <element signature="e#5788#5789#0" expanded="false" />
-                <element signature="e#5913#5914#0" expanded="false" />
-                <element signature="e#5943#5944#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PayloadMessageBenchmark.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/PayloadMessageBenchmark.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="766">
-              <caret line="77" column="55" lean-forward="false" selection-start-line="77" selection-start-column="55" selection-end-line="77" selection-end-column="55" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,8 +54,8 @@
       <file leaf-file-name="StreamMessageBenchmark.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/StreamMessageBenchmark.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="51" column="28" lean-forward="false" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+            <state relative-caret-position="443">
+              <caret line="58" column="94" lean-forward="true" selection-start-line="58" selection-start-column="94" selection-end-line="58" selection-end-column="94" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -90,26 +63,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="0">
-                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                <folding>
-                  <marker date="1517415539000" expanded="true" signature="1138:1446" ph="server: &lt;1 key&gt;" />
-                  <marker date="1517415539000" expanded="true" signature="1148:1446" ph="applicati…Connectors: &lt;1 item&gt;" />
-                  <marker date="1517415539000" expanded="true" signature="1183:1185" ph="h2" />
-                  <marker date="1517415539000" expanded="true" signature="1198:1202" ph="8445" />
-                  <marker date="1517415539000" expanded="true" signature="1231:1235" ph="1024" />
-                  <marker date="1517415539000" expanded="true" signature="1267:1272" ph="65535" />
-                  <marker date="1517415539000" expanded="true" signature="1293:1324" ph="$PROJECT_DIR$/../../../../../../sd…ngkeystore" />
-                  <marker date="1517415539000" expanded="true" signature="1349:1357" ph="password" />
-                  <marker date="1517415539000" expanded="true" signature="1380:1411" ph="$PROJECT_DIR$/../../../../../../sd…ngkeystore" />
-                  <marker date="1517415539000" expanded="true" signature="1438:1446" ph="password" />
-                </folding>
-              </first_editor>
-              <second_editor />
+      <file leaf-file-name="Enum.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/src.zip!/java/lang/Enum.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="343">
+              <caret line="75" column="24" lean-forward="false" selection-start-line="75" selection-start-column="24" selection-end-line="75" selection-end-column="24" />
+              <folding>
+                <element signature="e#2036#2037#0" expanded="true" />
+                <element signature="e#2063#2064#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,6 +95,18 @@
             <state relative-caret-position="187">
               <caret line="11" column="30" lean-forward="false" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PayloadMessageBenchmark.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/PayloadMessageBenchmark.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="715">
+              <caret line="73" column="34" lean-forward="true" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -222,8 +196,10 @@
         <option value="$PROJECT_DIR$/http2client/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/http2client/src/test/java/com/http2/examples/Http2ClientTest.java" />
-        <option value="$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/StreamMessageBenchmark.java" />
         <option value="$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/AbstractBenchmark.java" />
+        <option value="$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/StreamMessageBenchmark.java" />
+        <option value="$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/SingleMessageBenchmark.java" />
+        <option value="$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/PayloadMessageBenchmark.java" />
       </list>
     </option>
   </component>
@@ -1260,13 +1236,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/results.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/3.9.1/okhttp-3.9.1-sources.jar!/okhttp3/internal/http2/Http2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -1718,29 +1687,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-http/9.4.7.v20170914/jetty-http-9.4.7.v20170914-sources.jar!/org/eclipse/jetty/http/HttpHeader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="65" column="4" lean-forward="false" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#5953#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#5146#5147#0" expanded="false" />
-            <element signature="e#5195#5196#0" expanded="false" />
-            <element signature="e#5302#5303#0" expanded="false" />
-            <element signature="e#5331#5332#0" expanded="false" />
-            <element signature="e#5448#5449#0" expanded="false" />
-            <element signature="e#5487#5488#0" expanded="false" />
-            <element signature="e#5597#5598#0" expanded="false" />
-            <element signature="e#5651#5652#0" expanded="false" />
-            <element signature="e#5758#5759#0" expanded="false" />
-            <element signature="e#5788#5789#0" expanded="false" />
-            <element signature="e#5913#5914#0" expanded="false" />
-            <element signature="e#5943#5944#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/src.zip!/java/io/File.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
@@ -1754,26 +1700,6 @@
         <state relative-caret-position="489">
           <caret line="169" column="58" lean-forward="true" selection-start-line="169" selection-start-column="58" selection-end-line="169" selection-end-column="58" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/PayloadMessageBenchmark.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="766">
-          <caret line="77" column="55" lean-forward="false" selection-start-line="77" selection-start-column="55" selection-end-line="77" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/SingleMessageBenchmark.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="67" column="33" lean-forward="false" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1834,10 +1760,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-http/9.4.7.v20170914/jetty-http-9.4.7.v20170914-sources.jar!/org/eclipse/jetty/http/HttpHeader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="65" column="4" lean-forward="false" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/src.zip!/java/lang/Enum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="75" column="24" lean-forward="false" selection-start-line="75" selection-start-column="24" selection-end-line="75" selection-end-column="24" />
+          <folding>
+            <element signature="e#2036#2037#0" expanded="true" />
+            <element signature="e#2063#2064#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/StreamMessageBenchmark.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="51" column="28" lean-forward="false" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+        <state relative-caret-position="443">
+          <caret line="58" column="94" lean-forward="true" selection-start-line="58" selection-start-column="94" selection-end-line="58" selection-end-column="94" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/SingleMessageBenchmark.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="67" column="35" lean-forward="true" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/PayloadMessageBenchmark.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="715">
+          <caret line="73" column="34" lean-forward="true" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1846,8 +1811,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/http-benchmark/src/main/java/com/http/benchmark/AbstractBenchmark.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="247" column="30" lean-forward="false" selection-start-line="247" selection-start-column="30" selection-end-line="247" selection-end-column="30" />
+        <state relative-caret-position="358">
+          <caret line="288" column="96" lean-forward="false" selection-start-line="288" selection-start-column="96" selection-end-line="288" selection-end-column="96" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

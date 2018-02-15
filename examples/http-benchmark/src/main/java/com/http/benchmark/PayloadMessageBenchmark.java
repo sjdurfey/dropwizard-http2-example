@@ -6,7 +6,6 @@ import com.http2.api.Entity;
 import com.http2.api.PostEntities;
 import io.airlift.airline.Command;
 import okhttp3.*;
-import org.eclipse.jetty.http.HttpHeader;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -71,7 +70,7 @@ public class PayloadMessageBenchmark extends AbstractBenchmark {
         RequestBody.create(MediaType.parse("application/json"), mapper.writeValueAsString(post));
     Request.Builder request = new Request.Builder().url(url).post(body);
 
-    if (BEARER_TOKEN != null) request.addHeader(HttpHeader.AUTHORIZATION.name(), BEARER_TOKEN);
+//    if (BEARER_TOKEN != null) request.addHeader(HttpHeader.AUTHORIZATION.name(), BEARER_TOKEN);
 
     Timer.Context timer = registry.timer(metricName + FULL_RESULT).time();
     try {

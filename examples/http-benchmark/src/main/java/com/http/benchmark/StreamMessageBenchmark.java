@@ -3,7 +3,6 @@ package com.http.benchmark;
 import com.codahale.metrics.Timer;
 import io.airlift.airline.Command;
 import okhttp3.*;
-import org.eclipse.jetty.http.HttpHeader;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -60,7 +59,7 @@ public class StreamMessageBenchmark extends AbstractBenchmark {
     try {
       Request.Builder request = new Request.Builder().url(url).post(multipartBody);
 
-      if (BEARER_TOKEN != null) request.addHeader(HttpHeader.AUTHORIZATION.name(), BEARER_TOKEN);
+//      if (BEARER_TOKEN != null) request.addHeader(HttpHeader.AUTHORIZATION.toString(), "Bearer " +  BEARER_TOKEN);
 
       // https://github.com/square/okhttp/issues/3442
       client.dispatcher().setMaxRequestsPerHost(1);

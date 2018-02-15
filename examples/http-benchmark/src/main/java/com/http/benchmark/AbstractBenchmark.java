@@ -243,9 +243,7 @@ public abstract class AbstractBenchmark implements Runnable {
   private void setBearerToken() throws IOException {
     if (BEARER_TOKEN_LOCATION != null) {
       try (BufferedReader reader = new BufferedReader(new FileReader(BEARER_TOKEN_LOCATION))) {
-        String line;
-        while ((line = reader.readLine()) != null)
-          BEARER_TOKEN += line;
+        BEARER_TOKEN = reader.readLine();
       }
     }
   }
@@ -287,7 +285,8 @@ public abstract class AbstractBenchmark implements Runnable {
 
     @Override
     public Response intercept(Interceptor.Chain chain) throws IOException {
-      Request request = chain.request();
+      Request request =
+          chain.request().newBuilder().header("Authorization", "Bearer " + BEARER_TOKEN).build();
       Timer.Context time = timer.time();
       try {
         return chain.proceed(request);
