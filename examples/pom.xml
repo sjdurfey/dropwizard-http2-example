@@ -10,7 +10,7 @@
     </prerequisites>
     <modules>
         <module>http2server</module>
-        <module>http2client</module>
+        <module>http-benchmark</module>
         <module>http-api</module>
     </modules>
 

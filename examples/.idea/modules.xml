@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/examples.iml" filepath="$PROJECT_DIR$/examples.iml" />
       <module fileurl="file://$PROJECT_DIR$/http-api/http-api.iml" filepath="$PROJECT_DIR$/http-api/http-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/http2client/http2client.iml" filepath="$PROJECT_DIR$/http2client/http2client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/http-benchmark/http-benchmark.iml" filepath="$PROJECT_DIR$/http-benchmark/http-benchmark.iml" />
       <module fileurl="file://$PROJECT_DIR$/http2server/http2server.iml" filepath="$PROJECT_DIR$/http2server/http2server.iml" />
     </modules>
   </component>
