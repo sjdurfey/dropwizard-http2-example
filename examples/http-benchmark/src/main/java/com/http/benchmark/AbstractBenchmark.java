@@ -222,6 +222,7 @@ public abstract class AbstractBenchmark implements Runnable {
         if (verbose)
           System.out.println("waiting for future [" + i + "/" + futures.size() + "] to finish");
         future.get();
+        i++;
       }
       if (verbose) System.out.println("All actions have finished");
 

@@ -46,9 +46,11 @@ public class StreamMessageBenchmark extends AbstractBenchmark {
     System.out.println("Starting upload testing for " + metricName);
     MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.MIXED);
 
+    String payload = generator.generate(payloadSize);
+    
     IntStream.range(0, numEntities)
         .mapToObj(
-            i -> RequestBody.create(MediaType.parse("text/plain"), generator.generate(payloadSize)))
+            i -> RequestBody.create(MediaType.parse("text/plain"), payload))
         .forEach(body -> builder.addPart(body));
 
     MultipartBody multipartBody = builder.build();
